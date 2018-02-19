@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/jedcn/what-is-happening/issues"
   },
-  "homepage": "https://github.com/jedcn/what-is-happening#readme"
+  "homepage": "https://github.com/jedcn/what-is-happening#readme",
+  "dependencies": {
+    "@octokit/rest": "^14.0.9"
+  }
 }
