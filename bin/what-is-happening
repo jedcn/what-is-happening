@@ -1,0 +1,17 @@
+#!/usr/bin/env node
+
+const initOctokit = require('../lib/initOctokit');
+
+const pathPrefix = process.env.PATH_PREFIX || '';
+const host = process.env.HOST || 'api.github.com';
+const accessToken = process.env.ACCESS_TOKEN;
+const username = process.env.USER;
+
+const octokit = initOctokit({ host, pathPrefix, accessToken });
+octokit.activity.getEventsForUser({
+  username
+}).then(result => {
+  console.log('what-is-happening: result', result);
+}).catch(err => {
+  console.log('what-is-happening: err', err);
+});
