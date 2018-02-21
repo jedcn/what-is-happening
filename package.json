@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/jedcn/what-is-happening#readme",
   "dependencies": {
-    "@octokit/rest": "^14.0.9"
+    "@octokit/rest": "^14.0.9",
+    "date-fns": "^1.29.0"
   }
 }
