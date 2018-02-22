@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const initOctokit = require('../lib/initOctokit');
-const reportOnEvents = require('../lib/reportOnEvents');
+const analyzeUserEvents = require('../lib/analyzeUserEvents');
 
 const pathPrefix = process.env.PATH_PREFIX || '';
 const host = process.env.HOST || 'api.github.com';
@@ -9,11 +9,10 @@ const accessToken = process.env.ACCESS_TOKEN;
 const username = process.env.USER;
 
 const octokit = initOctokit({ host, pathPrefix, accessToken });
-octokit.activity.getEventsForUser({
-  username
-}).then(result => {
-  const server = host === 'api.github.com' ? 'github.com' : host;
-  reportOnEvents(username, server, result.data);
-}).catch(err => {
-  console.log('what-is-happening: err', err);
-});
+
+analyzeUserEvents({ octokit, host, username })
+  .then((analysis) => {
+    console.log(analysis);
+  }).catch(err => {
+    console.log('what-is-happening: err', err);
+  });
