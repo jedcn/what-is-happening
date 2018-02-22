@@ -12,7 +12,7 @@ const octokit = initOctokit({ host, pathPrefix, accessToken });
 octokit.activity.getEventsForUser({
   username
 }).then(result => {
-  const server = result.meta.server.toLowerCase();
+  const server = host === 'api.github.com' ? 'github.com' : host;
   reportOnEvents(username, server, result.data);
 }).catch(err => {
   console.log('what-is-happening: err', err);
