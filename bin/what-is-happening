@@ -12,7 +12,7 @@ const octokit = initOctokit({ host, pathPrefix, accessToken });
 octokit.activity.getEventsForUser({
   username
 }).then(result => {
-  reportOnEvents(console.log, result.data);
+  reportOnEvents(username, result.data);
 }).catch(err => {
   console.log('what-is-happening: err', err);
 });
