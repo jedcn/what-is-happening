@@ -12,12 +12,31 @@
     <h1 class="title">
       {{title}}
     </h1>
-    <p class="subtitle">
-    <ul>
-      {{#describedEvents}}
-        <li>{{{description}}}</li>
-      {{/describedEvents}}
-    </ul>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Activity</th>
+          <th>Links</th>
+        </tr>
+      </thead>
+      <tfoot>
+        <tr>
+          <th>Date</th>
+          <th>Activity</th>
+          <th>Links</th>
+        </tr>
+      </tfoot>
+      <tbody>
+        {{#userEvents}}
+        <tr>
+          <th>{{created_at}}</th>
+          <td>{{{text}}}</td>
+          <td></td>
+        </tr>
+        {{/userEvents}}
+      </tbody>
+    </table>
   </div>
 </section>
 </body>
