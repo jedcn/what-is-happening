@@ -17,6 +17,7 @@
         <tr>
           <th>Date</th>
           <th>Activity</th>
+          <th>Repository</th>
           <th>Links</th>
         </tr>
       </thead>
@@ -24,6 +25,7 @@
         <tr>
           <th>Date</th>
           <th>Activity</th>
+          <th>Repository</th>
           <th>Links</th>
         </tr>
       </tfoot>
@@ -32,7 +34,10 @@
         <tr>
           <th>{{created_at}}</th>
           <td>{{{text}}}</td>
-          <td></td>
+          <td>{{repo}}</td>
+          <td>
+            {{{links}}}
+          </td>
         </tr>
         {{/userEvents}}
       </tbody>
