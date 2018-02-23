@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-const initOctokit = require('../lib/initOctokit');
-const analyzeUserEvents = require('../lib/analyzeUserEvents');
+const initOctokit = require('../lib/client/initOctokit');
+const analyzeUserEvents = require('../lib/userEvents/analyzeUserEvents');
 
 const pathPrefix = process.env.PATH_PREFIX || '';
 const host = process.env.HOST || 'api.github.com';
