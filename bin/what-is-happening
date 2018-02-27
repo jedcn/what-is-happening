@@ -2,19 +2,21 @@
 
 const fs = require('fs');
 
+const argv = require('minimist')(process.argv.slice(2));
+const user = argv.user;
+
 const initOctokit = require('../lib/client/initOctokit');
 const analyzeUserEvents = require('../lib/userEvents/analyzeUserEvents');
 
 const pathPrefix = process.env.PATH_PREFIX || '';
 const host = process.env.HOST || 'api.github.com';
 const accessToken = process.env.ACCESS_TOKEN;
-const username = process.env.USER;
 
 const octokit = initOctokit({ host, pathPrefix, accessToken });
 
-analyzeUserEvents({ octokit, host, username })
+analyzeUserEvents({ octokit, host, user })
   .then((analysis) => {
-    const outputFile = `${username}.html`;
+    const outputFile = `${user}.html`;
     fs.writeFile(outputFile, analysis, (err) => {
       if (err) throw err;
       console.log(`Results written to ${outputFile}`);
