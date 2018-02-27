@@ -14,6 +14,8 @@ npm install what-is-happening
 USER=jedcn what-is-happening
 ```
 
+Results will be written to `jedcn.html`.
+
 ### Github Enterprise
 
 Assuming github is installed `git.company.com`.

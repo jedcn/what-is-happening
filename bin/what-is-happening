@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+const fs = require('fs');
+
 const initOctokit = require('../lib/client/initOctokit');
 const analyzeUserEvents = require('../lib/userEvents/analyzeUserEvents');
 
@@ -12,7 +14,11 @@ const octokit = initOctokit({ host, pathPrefix, accessToken });
 
 analyzeUserEvents({ octokit, host, username })
   .then((analysis) => {
-    console.log(analysis);
+    const outputFile = `${username}.html`;
+    fs.writeFile(outputFile, analysis, (err) => {
+      if (err) throw err;
+      console.log(`Results written to ${outputFile}`);
+    });
   }).catch(err => {
-    console.log('what-is-happening: err', err);
+    console.log('😢 what-is-happening had a problem: ', err);
   });
