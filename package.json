@@ -4,6 +4,7 @@
   "description": "What's happening? Better understand what people are up to",
   "main": "index.js",
   "scripts": {
+    "lint": "./node_modules/.bin/eslint lib bin test",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -24,5 +25,8 @@
     "@octokit/rest": "^14.0.9",
     "date-fns": "^1.29.0",
     "mustache": "^2.3.0"
+  },
+  "devDependencies": {
+    "eslint": "^4.18.1"
   }
 }
