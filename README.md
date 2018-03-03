@@ -1,5 +1,8 @@
 # What is Happening?
 
+A command line node script that builds a basic HTML file based on Github API
+calls.
+
 ## Installation
 
 ```
@@ -15,6 +18,10 @@ what-is-happening --user jedcn
 ```
 
 Results will be written to `jedcn.html`.
+
+Here's a [screenshot of `jedcn.html`][output-from-very-basic-beginnings].
+
+[output-from-very-basic-beginnings]: https://cl.ly/2T1o3C2z400d
 
 ### Github Enterprise
 
