@@ -6,7 +6,7 @@ const argv = require('minimist')(process.argv.slice(2));
 const user = argv.user;
 
 const initOctokit = require('../lib/client/initOctokit');
-const analyzeUserEvents = require('../lib/userEvents/analyzeUserEvents');
+const fetchUserEvents = require('../lib/userEvents/fetchUserEvents');
 
 const host = argv.host || 'api.github.com';
 
@@ -20,8 +20,12 @@ if (usingGithubEnterprise) {
   octokit = initOctokit({ host });
 }
 
-analyzeUserEvents({ octokit, host, user })
-  .then((analysis) => {
+const reportOnUserEvents = require('../lib/userEvents/reportOnUserEvents');
+
+fetchUserEvents({ octokit, host, user })
+  .then((userEventsResponse) => {
+    const server = host === 'api.github.com' ? 'github.com' : host;
+    const analysis = reportOnUserEvents(user, server, userEventsResponse.data);
     const outputFile = `${user}.html`;
     fs.writeFile(outputFile, analysis, (err) => {
       if (err) throw err;
