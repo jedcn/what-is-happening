@@ -20,14 +20,34 @@ if (usingGithubEnterprise) {
   octokit = initOctokit({ host });
 }
 
-const reportOnUserEvents = require('../lib/userEvents/reportOnUserEvents');
+const buildEvent = require('../lib/userEvents/buildEvent');
+const buildEvents = (listOfMaps, server) => {
+  return listOfMaps.map((map) => {
+    return buildEvent(map, server);
+  });
+};
+
+const processUserEventsData = ({ host, userEventsData }) => {
+  const server = host === 'api.github.com' ? 'github.com' : host;
+  const events = buildEvents(userEventsData, server);
+  return events.map((event) => new HtmlWrapper(event).toJSON());
+};
+
+const HtmlWrapper = require('../lib/userEvents/HtmlWrapper');
+
+const renderTemplateWithData = require('../lib/userEvents/renderHelpers').renderTemplateWithData;
 
 fetchUserEvents({ octokit, host, user })
-  .then((userEventsResponse) => {
-    const server = host === 'api.github.com' ? 'github.com' : host;
-    const analysis = reportOnUserEvents(user, server, userEventsResponse.data);
+  .then((userEventsData) => {
+    const processedEvents = processUserEventsData({ host, userEventsData });
+    const title = `${user} Activity`;
+    const renderData = {
+      userEvents: processedEvents.toJSON(),
+      title
+    };
+    const renderedContent = renderTemplateWithData('userEvents/index', renderData);
     const outputFile = `${user}.html`;
-    fs.writeFile(outputFile, analysis, (err) => {
+    fs.writeFile(outputFile, renderedContent, (err) => {
       if (err) throw err;
       console.log(`Results written to ${outputFile}`);
     });

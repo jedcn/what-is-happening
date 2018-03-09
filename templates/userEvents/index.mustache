@@ -6,11 +6,11 @@
   <title>User Activity</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
   <style>
-    .user-events-table td.created_at {
+    .user-events-table td.createdAt {
       width: 225px;
     }
 
-    .user-events-table td.text {
+    .user-events-table td.description {
       width: 650px;
     }
   </style>
@@ -25,6 +25,7 @@
       <thead>
         <tr>
           <th>Date</th>
+          <th>User</th>
           <th>Activity</th>
           <th>Context</th>
           <th>Links</th>
@@ -33,6 +34,7 @@
       <tfoot>
         <tr>
           <th>Date</th>
+          <th>User</th>
           <th>Activity</th>
           <th>Context</th>
           <th>Links</th>
@@ -41,9 +43,10 @@
       <tbody>
         {{#userEvents}}
         <tr>
-          <th class="created_at">{{created_at}}</th>
-          <td class="text">{{{text}}}</td>
-          <td>{{repo}}</td>
+          <th class="createdAt">{{createdAt}}</th>
+          <th>{{actor}}</th>
+          <td class="description">{{{description}}}</td>
+          <td>{{{repo}}}</td>
           <td>
             {{{links}}}
           </td>
