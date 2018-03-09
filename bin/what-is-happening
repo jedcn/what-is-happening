@@ -6,7 +6,7 @@ const argv = require('minimist')(process.argv.slice(2));
 const user = argv.user;
 
 const initOctokit = require('../lib/github/client/initOctokit');
-const fetchUserEvents = require('../lib/github/userEvents/fetchUserEvents');
+const fetchUserEvents = require('../lib/github/core/fetchUserEvents');
 
 const host = argv.host || 'api.github.com';
 
@@ -20,7 +20,7 @@ if (usingGithubEnterprise) {
   octokit = initOctokit({ host });
 }
 
-const buildEvent = require('../lib/github/userEvents/buildEvent');
+const buildEvent = require('../lib/github/core/buildEvent');
 const buildEvents = (listOfMaps, server) => {
   return listOfMaps.map((map) => {
     return buildEvent(map, server);
@@ -33,9 +33,9 @@ const processUserEventsData = ({ host, userEventsData }) => {
   return events.map((event) => new HtmlWrapper(event).toJSON());
 };
 
-const HtmlWrapper = require('../lib/github/userEvents/HtmlWrapper');
+const HtmlWrapper = require('../lib/github/core/HtmlWrapper');
 
-const renderTemplateWithData = require('../lib/github/userEvents/renderHelpers').renderTemplateWithData;
+const renderTemplateWithData = require('../lib/github/core/renderHelpers').renderTemplateWithData;
 
 fetchUserEvents({ octokit, host, user })
   .then((userEventsData) => {
