@@ -1,12 +1,13 @@
 #!/usr/bin/env node
 
-const fs = require('fs');
-
 const argv = require('minimist')(process.argv.slice(2));
 const user = argv.user;
 
 const initOctokit = require('../lib/github/client/initOctokit');
 const fetchUserEvents = require('../lib/github/core/fetchUserEvents');
+const processUserEventsData = require('../lib/github/core/processUserEventsData');
+const renderContentFromEvents = require('../lib/github/render/renderContentFromEvents');
+const writeContentToFile = require('../lib/github/render/writeContentToFile');
 
 const host = argv.host || 'api.github.com';
 
@@ -20,37 +21,13 @@ if (usingGithubEnterprise) {
   octokit = initOctokit({ host });
 }
 
-const buildEvent = require('../lib/github/core/buildEvent');
-const buildEvents = (listOfMaps, server) => {
-  return listOfMaps.map((map) => {
-    return buildEvent(map, server);
-  });
-};
-
-const processUserEventsData = ({ host, userEventsData }) => {
-  const server = host === 'api.github.com' ? 'github.com' : host;
-  const events = buildEvents(userEventsData, server);
-  return events.map((event) => new HtmlWrapper(event).toJSON());
-};
-
-const HtmlWrapper = require('../lib/github/core/HtmlWrapper');
-
-const renderTemplateWithData = require('../lib/github/core/renderHelpers').renderTemplateWithData;
-
 fetchUserEvents({ octokit, host, user })
   .then((userEventsData) => {
     const processedEvents = processUserEventsData({ host, userEventsData });
-    const title = `${user} Activity`;
-    const renderData = {
-      userEvents: processedEvents.toJSON(),
-      title
-    };
-    const renderedContent = renderTemplateWithData('userEvents/index', renderData);
+    const renderedContent = renderContentFromEvents({ user, processedEvents });
     const outputFile = `${user}.html`;
-    fs.writeFile(outputFile, renderedContent, (err) => {
-      if (err) throw err;
-      console.log(`Results written to ${outputFile}`);
-    });
+    writeContentToFile(renderedContent, outputFile);
+    console.log(`Results written to ${outputFile}`);
   }).catch(err => {
     console.log('😢 what-is-happening had a problem: ', err);
   });
