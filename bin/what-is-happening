@@ -21,10 +21,18 @@ if (usingGithubEnterprise) {
   octokit = initOctokit({ host });
 }
 
-fetchUserEvents({ octokit, host, user })
+const { subDays } = require('date-fns');
+const beginning = subDays(new Date(), 7);
+
+fetchUserEvents({ octokit, user, beginning })
   .then((userEventsData) => {
     const processedEvents = processUserEventsData({ host, userEventsData });
-    const renderedContent = renderContentFromEvents({ user, processedEvents });
+    const renderedContent = renderContentFromEvents({
+      begin: beginning,
+      end: new Date(),
+      processedEvents,
+      user
+    });
     const outputFile = `${user}.html`;
     writeContentToFile(renderedContent, outputFile);
     console.log(`Results written to ${outputFile}`);
