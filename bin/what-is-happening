@@ -5,10 +5,10 @@ const user = argv.user;
 
 const initOctokit = require('../lib/github/client/initOctokit');
 const fetchUserEvents = require('../lib/github/core/fetchUserEvents');
-const processUserEventsData = require('../lib/github/core/processUserEventsData');
+const buildEvents = require('../lib/github/core/buildEvents');
+const createRenderData = require('../lib/github/core/createRenderData');
 const renderContentFromEvents = require('../lib/github/render/renderContentFromEvents');
 const writeContentToFile = require('../lib/github/render/writeContentToFile');
-
 const host = argv.host || 'api.github.com';
 
 let octokit;
@@ -26,13 +26,17 @@ const beginning = subDays(new Date(), 7);
 
 fetchUserEvents({ octokit, user, beginning })
   .then((userEventsData) => {
-    const processedEvents = processUserEventsData({ host, userEventsData });
-    const renderedContent = renderContentFromEvents({
-      begin: beginning,
-      end: new Date(),
-      processedEvents,
+    const events = buildEvents({ host, userEventsData });
+    const begin = beginning;
+    const end = new Date();
+    const renderData = createRenderData({
+      begin,
+      end,
+      events,
+      host,
       user
     });
+    const renderedContent = renderContentFromEvents(renderData);
     const outputFile = `${user}.html`;
     writeContentToFile(renderedContent, outputFile);
     console.log(`Results written to ${outputFile}`);
