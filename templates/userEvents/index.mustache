@@ -18,11 +18,41 @@
 <body>
 <section class="section">
   <div class="container">
-    <h1 class="title">
+    <h1 class="is-size-1">
       {{title}}
     </h1>
-    <h2>
-      Report beginning <strong>{{begin}}</strong> and ending <strong>{{end}}</strong>
+    <h2 class="is-size-2">
+      Time
+    </h2>
+    <p>
+      Beginning on <strong>{{begin}}</strong>. Ending on <strong>{{end}}</strong>.
+    </p>
+    {{#summaries}}
+    <h2 class="is-size-2">
+      {{title}}
+    </h2>
+    <p>
+      {{{description}}}
+    </p>
+    <table class="user-events-table table is-hoverable is-fullwidth is-striped">
+      <thead>
+        <tr>
+          <th>Description</th>
+          <th>Context</th>
+        </tr>
+      </thead>
+      <tbody>
+      {{#items}}
+        <tr>
+          <td class="description">{{{description}}}</td>
+          <td>{{{context}}}</td>
+        </tr>
+      {{/items}}
+      </tbody>
+    </table>
+    {{/summaries}}
+    <h2 class="is-size-2">
+      Timeline
     </h2>
     <table class="user-events-table table is-hoverable is-fullwidth is-striped">
       <thead>
