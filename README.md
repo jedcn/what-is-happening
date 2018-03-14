@@ -41,3 +41,14 @@ If you need an Access Token, visit your Github Enterprise:
 
 The Access Token does not need any particular powers-- it should be created
 w/ the no additional permissions.
+
+### Multiple Users
+
+You can understand what a "team" of people have been up to by passing
+comma-separated values for `--user`:
+
+```
+what-is-happening --user jedcn,banderson
+```
+
+Results will be written to `jedcn-banderson.html`.
