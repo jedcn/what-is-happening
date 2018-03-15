@@ -41,3 +41,27 @@ If you need an Access Token, visit your Github Enterprise:
 
 The Access Token does not need any particular powers-- it should be created
 w/ the no additional permissions.
+
+### Multiple Users
+
+You can understand what a "team" of people have been up to by passing
+comma-separated values for `--user`:
+
+```
+what-is-happening --user jedcn,banderson
+```
+
+Results will be written to `jedcn-banderson.html`.
+
+### Focused Repositories
+
+If you know that a "team" of people focus their work on specific repos, you can
+ignore work those team members contribute to additional repositories with
+`--focus-on-repos`:
+
+```
+what-is-happening --user jedcn,banderson --focus-on-repos jedcn/NicknameGenerator,banderson/Inception
+```
+
+This would only report on activity associated with `jedcn/NicknameGenerator`
+and `banderson/Inception`.
