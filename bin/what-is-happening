@@ -2,6 +2,7 @@
 
 const argv = require('minimist')(process.argv.slice(2));
 const user = argv.user;
+const focusOnRepos = argv['focus-on-repos'] ? argv['focus-on-repos'].split(',') : [];
 
 const initOctokit = require('../lib/github/client/initOctokit');
 const fetchUserEvents = require('../lib/github/core/fetchUserEvents');
@@ -10,7 +11,7 @@ const createRenderData = require('../lib/github/core/createRenderData');
 const renderContentFromEvents = require('../lib/github/render/renderContentFromEvents');
 const writeContentToFile = require('../lib/github/render/writeContentToFile');
 const mergeListsOfEventData = require('../lib/github/core/mergeListsOfEventData');
-
+const removeEventsNotInRepos = require('../lib/github/core/removeEventsNotInRepos');
 const host = argv.host || 'api.github.com';
 
 const buildOctokit = (host, argv) => {
@@ -37,7 +38,8 @@ const users = user.split(',');
 
 fetchAllUserEvents({ host, argv, users, beginning })
   .then((listOfListsOfEventData) => {
-    const userEventsData = mergeListsOfEventData(listOfListsOfEventData);
+    let userEventsData = mergeListsOfEventData(listOfListsOfEventData);
+    userEventsData = removeEventsNotInRepos(userEventsData, focusOnRepos);
     const events = buildEvents({ host, userEventsData });
     const begin = beginning;
     const end = new Date();
