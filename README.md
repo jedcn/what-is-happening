@@ -52,3 +52,16 @@ what-is-happening --user jedcn,banderson
 ```
 
 Results will be written to `jedcn-banderson.html`.
+
+### Focused Repositories
+
+If you know that a "team" of people focus their work on specific repos, you can
+ignore work those team members contribute to additional repositories with
+`--focus-on-repos`:
+
+```
+what-is-happening --user jedcn,banderson --focus-on-repos jedcn/NicknameGenerator,banderson/Inception
+```
+
+This would only report on activity associated with `jedcn/NicknameGenerator`
+and `banderson/Inception`.
