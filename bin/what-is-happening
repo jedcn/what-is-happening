@@ -1,15 +1,9 @@
 #!/usr/bin/env node
 
-const loadRunControlFile = require('../lib/setup/loadRunControlFile');
-const runControlValues = loadRunControlFile();
-const accessToken = runControlValues['ACCESS_TOKEN'];
-const githubEnterpriseUrl = runControlValues['GITHUB_ENTERPRISE_URL'];
+const buildConfigFromArgs = require('../lib/setup/buildConfigFromArgs');
 
-const argv = require('minimist')(process.argv.slice(2));
-const user = argv.user;
-const focusOnRepos = argv['focus-on-repos'] ? argv['focus-on-repos'].split(',') : [];
+const config = buildConfigFromArgs(process.argv);
 
-const initOctokit = require('../lib/github/client/initOctokit');
 const fetchUserEvents = require('../lib/github/core/fetchUserEvents');
 const buildEvents = require('../lib/github/core/buildEvents');
 const createRenderData = require('../lib/github/core/createRenderData');
@@ -17,39 +11,25 @@ const renderContentFromEvents = require('../lib/github/render/renderContentFromE
 const writeContentToFile = require('../lib/github/render/writeContentToFile');
 const mergeListsOfEventData = require('../lib/github/core/mergeListsOfEventData');
 const removeEventsNotInRepos = require('../lib/github/core/removeEventsNotInRepos');
-const host = githubEnterpriseUrl || 'api.github.com';
 
-const buildOctokit = (host, argv, accessToken) => {
-  const usingGithubEnterprise = host !== 'api.github.com';
-  if (usingGithubEnterprise) {
-    const pathPrefix = argv['path-prefix'] || 'api/v3';
-    return initOctokit({ host, pathPrefix, accessToken });
-  } else {
-    return initOctokit({ host });
-  }
+const fetchAllUserEvents = (config) => {
+  const octokit = config.getClient();
+  const users = config.getUsers();
+  const beginning = config.getBeginning();
+  return Promise.all(users.map((user) => fetchUserEvents({ octokit, user, beginning })));
 };
 
-const { subDays } = require('date-fns');
-const beginning = subDays(new Date(), 7);
-
-const fetchAllUserEvents = ({ host, argv, users, beginning }) => {
-  const octokit = buildOctokit(host, argv, accessToken);
-  const promises = users.map((user) => fetchUserEvents({ octokit, user, beginning }));
-  return Promise.all(promises);
-};
-
-const users = user.split(',');
-
-fetchAllUserEvents({ host, argv, users, beginning })
+fetchAllUserEvents(config)
   .then((listOfListsOfEventData) => {
     let userEventsData = mergeListsOfEventData(listOfListsOfEventData);
+    const focusOnRepos = config.getFocusOnRepos();
     userEventsData = removeEventsNotInRepos(userEventsData, focusOnRepos);
+    const host = config.getHost();
+    const users = config.getUsers();
     const events = buildEvents({ host, userEventsData });
-    const begin = beginning;
-    const end = new Date();
     const renderData = createRenderData({
-      begin,
-      end,
+      begin: config.getBeginning(),
+      end: new Date(),
       events,
       host,
       users
