@@ -32,10 +32,11 @@ fetchAllUserEvents(config)
       end: new Date(),
       events,
       host,
+      title: config.getTitle(),
       users
     });
     const renderedContent = renderContentFromEvents(renderData);
-    const outputFile = `${users.join('-')}.html`;
+    const outputFile = config.getOutputFile();
     writeContentToFile(renderedContent, outputFile);
     console.log(`Results written to ${outputFile}`);
   }).catch(err => {

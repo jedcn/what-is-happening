@@ -51,16 +51,32 @@ Once you have done this, you use the utility in the same way:
 what-is-happening --user jedcn
 ```
 
-### Multiple Users
+### Advanced Usage
 
-You can get a report for what a "team" of people have been up to by passing
-comma-separated values for `--user`:
+You can supply additional parameters for running `what-is-happening` with a
+JavaScript config file.
+
+This file can contain JavaScript but it needs to assign an object to
+`module.exports` like so in this self-documenting example:
+
+```js
+module.exports = {
+  daysBack: 5,
+  outputFile: 'inception.html',
+  title: 'Inception',
+  users: [
+    'banderson',
+    'jedcn',
+  ]
+};
+```
+
+If you have saved this content into a file named `inception.json`, you can
+reference it with the `--config` option:
 
 ```
-what-is-happening --user jedcn,banderson
+what-is-happening --config inception.json
 ```
-
-Results will be written to `jedcn-banderson.html`.
 
 ### Focused Repositories
 
