@@ -10,7 +10,6 @@ const createRenderData = require('../lib/github/core/createRenderData');
 const renderContentFromEvents = require('../lib/github/render/renderContentFromEvents');
 const writeContentToFile = require('../lib/github/render/writeContentToFile');
 const mergeListsOfEventData = require('../lib/github/core/mergeListsOfEventData');
-const removeEventsNotInRepos = require('../lib/github/core/removeEventsNotInRepos');
 
 const fetchAllUserEvents = (config) => {
   const octokit = config.getClient();
@@ -21,12 +20,10 @@ const fetchAllUserEvents = (config) => {
 
 fetchAllUserEvents(config)
   .then((listOfListsOfEventData) => {
-    let userEventsData = mergeListsOfEventData(listOfListsOfEventData);
-    const focusOnRepos = config.getFocusOnRepos();
-    userEventsData = removeEventsNotInRepos(userEventsData, focusOnRepos);
+    const userEventsData = mergeListsOfEventData(listOfListsOfEventData).filter(config.getEventsFilter());
     const host = config.getHost();
-    const users = config.getUsers();
     const events = buildEvents({ host, userEventsData });
+    const users = config.getUsers();
     const renderData = createRenderData({
       begin: config.getBeginning(),
       end: new Date(),
