@@ -27,66 +27,69 @@
     <p>
       Beginning on <strong>{{begin}}</strong>. Ending on <strong>{{end}}</strong>.
     </p>
-    {{#summaries}}
     <h2 class="is-size-2">
-      {{title}}
+      Timeline
     </h2>
-    <p>
-      {{{description}}}
-    </p>
-    <table class="user-events-table table is-hoverable is-fullwidth is-striped">
-      <thead>
+    {{#daysOfUserEvents}}
+      <h2 class="is-size-2">{{dayName}}</h2>
+      <table class="user-events-table table is-hoverable is-fullwidth is-striped">
+        <thead>
+        <tr>
+          <th>Date</th>
+          <th>User</th>
+          <th>Activity</th>
+          <th>Context</th>
+          <th>Links</th>
+        </tr>
+        </thead>
+        <tfoot>
+        <tr>
+          <th>Date</th>
+          <th>User</th>
+          <th>Activity</th>
+          <th>Context</th>
+          <th>Links</th>
+        </tr>
+        </tfoot>
+        <tbody>
+        {{#userEvents}}
+          <tr>
+            <th class="createdAt">{{createdAtDescription}}</th>
+            <th>{{actor}}</th>
+            <td class="description">{{{description}}}</td>
+            <td>{{{repo}}}</td>
+            <td>
+              {{{links}}}
+            </td>
+          </tr>
+        {{/userEvents}}
+        </tbody>
+      </table>
+    {{/daysOfUserEvents}}
+    {{#summaries}}
+      <h2 class="is-size-2">
+        {{title}}
+      </h2>
+      <p>
+        {{{description}}}
+      </p>
+      <table class="user-events-table table is-hoverable is-fullwidth is-striped">
+        <thead>
         <tr>
           <th>Description</th>
           <th>Context</th>
         </tr>
-      </thead>
-      <tbody>
-      {{#items}}
-        <tr>
-          <td class="description">{{{description}}}</td>
-          <td>{{{context}}}</td>
-        </tr>
-      {{/items}}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+        {{#items}}
+          <tr>
+            <td class="description">{{{description}}}</td>
+            <td>{{{context}}}</td>
+          </tr>
+        {{/items}}
+        </tbody>
+      </table>
     {{/summaries}}
-    <h2 class="is-size-2">
-      Timeline
-    </h2>
-    <table class="user-events-table table is-hoverable is-fullwidth is-striped">
-      <thead>
-        <tr>
-          <th>Date</th>
-          <th>User</th>
-          <th>Activity</th>
-          <th>Context</th>
-          <th>Links</th>
-        </tr>
-      </thead>
-      <tfoot>
-        <tr>
-          <th>Date</th>
-          <th>User</th>
-          <th>Activity</th>
-          <th>Context</th>
-          <th>Links</th>
-        </tr>
-      </tfoot>
-      <tbody>
-        {{#userEvents}}
-        <tr>
-          <th class="createdAt">{{createdAt}}</th>
-          <th>{{actor}}</th>
-          <td class="description">{{{description}}}</td>
-          <td>{{{repo}}}</td>
-          <td>
-            {{{links}}}
-          </td>
-        </tr>
-        {{/userEvents}}
-      </tbody>
-    </table>
   </div>
 </section>
 </body>
