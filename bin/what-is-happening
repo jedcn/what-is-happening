@@ -21,16 +21,14 @@ const fetchAllUserEvents = (config) => {
 fetchAllUserEvents(config)
   .then((listOfListsOfEventData) => {
     const userEventsData = mergeListsOfEventData(listOfListsOfEventData).filter(config.getEventsFilter());
-    const host = config.getHost();
-    const events = buildEvents({ host, userEventsData });
-    const users = config.getUsers();
+    const events = buildEvents({ host: config.getHost(), userEventsData });
     const renderData = createRenderData({
       begin: config.getBeginning(),
       end: new Date(),
       events,
-      host,
+      host: config.getHost(),
       title: config.getTitle(),
-      users
+      users: config.getUsers()
     });
     const renderedContent = renderContentFromEvents(renderData);
     const outputFile = config.getOutputFile();
