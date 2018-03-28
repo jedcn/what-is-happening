@@ -29,15 +29,32 @@
       Time
     </h2>
     <p>
-      Beginning on <strong>{{begin}}</strong>. Ending on <strong>{{end}}</strong>.
+      Begins on <strong>{{begin}}</strong>.
     </p>
+    <p>
+      Ends on <strong>{{end}}</strong>.
+    </p>
+    <h2 class="is-size-2">
+      Outline
+    </h2>
+    <ul>
+      <li><a href="#pullRequestRundown">Pull Request Rundown</a></li>
+      <li><a href="#activitySummary">Activity Summary</a></li>
+      <li><a href="#timeline">Timeline</a></li>
+    </ul>
+    {{#pullRequestRundown}}
+      <h2 id="pullRequestRundown" class="is-size-2">
+        Pull Request Rundown
+      </h2>
+      {{{content}}}
+    {{/pullRequestRundown}}
     {{#activitySummary}}
-      <h2 class="is-size-2">
-        {{title}}
+      <h2 id="activitySummary" class="is-size-2">
+        Activity Summary
       </h2>
       {{{content}}}
     {{/activitySummary}}
-    <h2 class="is-size-2">
+    <h2 id="timeline" class="is-size-2">
       Timeline
     </h2>
     {{#daysOfUserEvents}}

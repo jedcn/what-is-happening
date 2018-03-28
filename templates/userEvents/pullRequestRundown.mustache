@@ -1,0 +1,20 @@
+<table class="user-events-table table is-hoverable is-fullwidth is-striped">
+  <thead>
+  <tr>
+    <th>Title</th>
+    <th>Repo</th>
+    <th>Opened</th>
+    <th>Closed</th>
+  </tr>
+  </thead>
+  <tbody>
+  {{#pullRequests}}
+    <tr>
+      <td class="description">{{{pullRequestLink}}}</td>
+      <td>{{{repoLink}}}</td>
+      <td>{{openDate}}</td>
+      <td>{{closeDate}}</td>
+    </tr>
+  {{/pullRequests}}
+  </tbody>
+</table>
