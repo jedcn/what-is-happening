@@ -1,0 +1,22 @@
+<table class="comment-rundown-table table is-hoverable is-fullwidth is-striped">
+  <thead>
+  <tr>
+    <th>Time</th>
+    <th>User</th>
+    <th>Repo</th>
+    <th>Context</th>
+    <th>Text</th>
+  </tr>
+  </thead>
+  <tbody>
+  {{#comments}}
+    <tr>
+      <th class="createdAtLong">{{createdAtDay}}<p>{{createdAtHour}}</p></th>
+      <th>{{actor}}</th>
+      <td>{{{repoLink}}}</td>
+      <td>{{{context}}}</td>
+      <td class="comment">{{{commentLink}}}</td>
+    </tr>
+  {{/comments}}
+  </tbody>
+</table>
