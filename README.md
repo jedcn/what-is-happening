@@ -3,6 +3,9 @@
 A command line node script that builds a basic HTML report based on Github API
 calls.
 
+**This project is not ready for consumption. It's been written very quickly,
+and I'm not sure the end result is valuable. Check back later?**
+
 ## Installation
 
 ```
@@ -19,9 +22,7 @@ what-is-happening --user jedcn
 
 Results will be written to `jedcn.html`.
 
-Here's a [screenshot of `jedcn.html`][output-from-very-basic-beginnings].
-
-[output-from-very-basic-beginnings]: https://cl.ly/2T1o3C2z400d
+Here is what you might get: https://cl.ly/3S441s1o1s2q
 
 ### Github Enterprise
 
