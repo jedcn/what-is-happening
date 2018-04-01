@@ -1,4 +1,4 @@
-<table class="comment-rundown table is-hoverable is-fullwidth is-striped">
+<table class="comment-rundown-table table is-hoverable is-fullwidth is-striped">
   <thead>
   <tr>
     <th>Time</th>
@@ -11,11 +11,11 @@
   <tbody>
   {{#comments}}
     <tr>
-      <th class="createdAtLong">{{createdAtDay}}<br/>{{createdAtHour}}</th>
+      <th class="createdAtLong">{{createdAtDay}}<p>{{createdAtHour}}</p></th>
       <th>{{actor}}</th>
       <td>{{{repoLink}}}</td>
-      <td class="context">{{{context}}}</td>
-      <td>{{{commentLink}}}</td>
+      <td>{{{context}}}</td>
+      <td class="comment">{{{commentLink}}}</td>
     </tr>
   {{/comments}}
   </tbody>
