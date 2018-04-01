@@ -6,12 +6,17 @@
   <title>User Activity</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
   <style>
-    .user-events-table td.createdAt {
-      width: 225px;
+    table th.createdAtShort {
+      width: 100px;
     }
-
+    table th.createdAtLong {
+      width: 230px;
+    }
     .user-events-table td.description {
       width: 650px;
+    }
+    .comment-rundown td.context {
+      width: 400px;
     }
     ul {
       list-style: disc;
@@ -41,6 +46,7 @@
       <li><a href="#pullRequestRundown">Pull Request Rundown</a></li>
       <li><a href="#activitySummary">Activity Summary</a></li>
       <li><a href="#timeline">Timeline</a></li>
+      <li><a href="#commentRundown">Comment Rundown</a></li>
     </ul>
     {{#pullRequestRundown}}
       <h2 id="pullRequestRundown" class="is-size-2">
@@ -82,7 +88,7 @@
         <tbody>
         {{#userEvents}}
           <tr>
-            <th class="createdAt">{{createdAtDescription}}</th>
+            <th class="createdAtShort">{{createdAtDescription}}</th>
             <th>{{actor}}</th>
             <td class="description">{{{description}}}</td>
             <td>{{{repo}}}</td>
@@ -94,6 +100,12 @@
         </tbody>
       </table>
     {{/daysOfUserEvents}}
+    {{#commentRundown}}
+      <h2 id="commentRundown" class="is-size-2">
+        Comment Rundown
+      </h2>
+      {{{content}}}
+    {{/commentRundown}}
   </div>
 </section>
 </body>
